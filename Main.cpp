@@ -1654,16 +1654,23 @@ namespace moving {
     }
 
     void drawThanhButVe() {
+        if (butvedis > butvedis_max) {
+            butvedis = butvedis_max;
+        }
+        else if (butvedis < butvedis_min) {
+            butvedis = butvedis_min;
+        }
+        butvex = sin(-angle * M_PI / 180) * butvedis * 4.0f;
+        butvez = cos(-angle * M_PI / 180) * butvedis * 5.0f;
         lienketAngle = atan2(butvex , butvez - 1.2f) / M_PI * 180;
-        glPushMatrix();
 
+
+        glPushMatrix();
         glTranslatef(0.0f, 2.0f, -butvez + thanhTruotDis);
         glRotatef(lienketAngle, 0.f, 1.0f, 0.f);
-        
         //glRotatef(-180, 0.0f, 1.0f, 0.0f);
         glTranslatef(0.0f, 0.0f, 5.0f);
         glScalef(0.5f, 2.0f, 5.0f);
-        
         glBegin(GL_QUADS); {
             glColor3f(0.3f, 0.9f, 0.4f);
             // botom
@@ -1704,6 +1711,57 @@ namespace moving {
             glVertex3f(1.f, 0.f, 1.f);
         }
         glEnd();
+        //Reverse Transform 
+        glScalef(1.0f/0.5f, 1.0f/2.0f, 1.0f / 5.0f);
+
+        // Final touch
+        glTranslatef(0.0f, -0.2f, 4.0f);
+        glRotatef(270, 1.0f, 0.0f, 0.0f);
+        glScalef(0.5f, 0.5f, 0.5f);
+
+        //Pointy part
+        glTranslatef(0.0f, 0.0f, 3.0f);
+        glScalef(1.0f, 1.0f, 0.8f);
+        glBegin(GL_TRIANGLES);
+        for (float k = 0; k <= 2 * M_PI; k += 0.01f) {
+            glColor3f(1.0f, 0.0f, 0.0f);
+            glVertex3f(0.0f, 0.0f, 1.0f);
+            glColor3f(1.0f, 0.0f, 0.0f);
+            glVertex3f(cos(k), sin(k), 0.0f);
+            glColor3f(1.0f, 0.0f, 0.0f);
+            glVertex3f(cos(k + 0.01f), sin(k + 0.01f), 0.0f);
+        }
+        glEnd();
+
+        //Reverse transform
+        glTranslatef(0.0f, 0.0f, -3.0f);
+        glScalef(1.0f, 1.0f, 1.0f/0.8f);
+
+        // Cylinder
+        glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+        glTranslatef(0.0f, 1.4f, 0.0f);
+        glBegin(GL_QUAD_STRIP);
+        for (float k = 0; k <= 2 * M_PI; k += 0.01f) {
+            glColor3f(1.0f, 0.0f, 0.0f);
+            glVertex3f(cos(k), +1.0f, sin(k));
+            glColor3f(1.0f, 0.0f, 0.0f);
+            glVertex3f(cos(k), -1.0f, sin(k));
+        }
+        glEnd();
+        /* top and bottom circles */
+        /* reuse the currentTexture on top and bottom) */
+        for (float i = 1; i >= -1; i -= 2) {
+            glBegin(GL_TRIANGLE_FAN);
+            glColor3f(1.0, 0.0, 0.0);
+            glVertex3f(0.0f, i, 0.0f);
+            for (float k = 0; k <= 2 * M_PI; k += 0.01f) {
+                glColor3f(1.0f, 0.0f, 0.0f);
+                glVertex3f(i * cos(k), i, sin(k));
+            }
+            glEnd();
+        }
+        glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
+        glTranslatef(0.0f, -2.0f, -10.0f);
         glPopMatrix();
 
         //Ve phan tru dep
@@ -2009,15 +2067,15 @@ void displayFunc(void) {
     //part2::drawChot3();
 
     moving::drawThanhButVe();
-    moving::drawButVe();
-    moving::drawChot1();
+    //moving::drawButVe();
+    /*moving::drawChot1();
     moving::drawTamTruot();
     moving::drawThanhLienKet();
     moving::drawChot2();
 
     base::drawRay();
     base::drawChanDe();
-    base::drawGiaDo();
+    base::drawGiaDo();*/
     
 
     if (animate == true) {

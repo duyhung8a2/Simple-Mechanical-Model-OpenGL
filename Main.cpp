@@ -192,7 +192,7 @@ static bool ortho = false;
 static char floorMap[100];
 static bool light2 = true;
 static bool toggleAxes = true;
-static bool animate = false;
+static bool animate = true;
 
 void animation(int animate);
 
@@ -1660,17 +1660,17 @@ namespace moving {
         else if (butvedis < butvedis_min) {
             butvedis = butvedis_min;
         }
-        butvex = sin(-angle * M_PI / 180) * butvedis * 4.0f;
-        butvez = cos(-angle * M_PI / 180) * butvedis * 5.0f;
-        lienketAngle = atan2(butvex , butvez - 1.2f) / M_PI * 180;
+        butvex = sin(-angle * M_PI / 180) * butvedis * 3.0f;
+        butvez = cos(-angle * M_PI / 180) * butvedis * 3.0f;
+        lienketAngle = atan2(butvex, butvez - 0.4f) / M_PI * 180;
 
 
         glPushMatrix();
         glTranslatef(0.0f, 2.0f, -butvez + thanhTruotDis);
         glRotatef(lienketAngle, 0.f, 1.0f, 0.f);
         //glRotatef(-180, 0.0f, 1.0f, 0.0f);
-        glTranslatef(0.0f, 0.0f, 5.0f);
-        glScalef(0.5f, 2.0f, 5.0f);
+        glTranslatef(0.0f, 0.0f, 4.0f);
+        glScalef(0.5f, 2.0f, 4.0f);
         glBegin(GL_QUADS); {
             glColor3f(0.3f, 0.9f, 0.4f);
             // botom
@@ -1954,7 +1954,9 @@ namespace moving {
 
     void drawThanhLienKet() {
         glPushMatrix();
-        glTranslatef(0.0f,-0.8f, 5.5f);
+        glTranslatef(0.0f, 0.0f, -butvez +  thanhTruotDis);
+        glRotatef(lienketAngle, 0.f, 1.0f, 0.f);
+        glTranslatef(0.0f, -0.8f, 2.0f);
         glScalef(0.8f, 3.0f, 4.0f);
         glBegin(GL_QUADS); {
             glColor3f(0.3f, 0.3f, 0.3f);
@@ -2002,7 +2004,7 @@ namespace moving {
     void drawChot2() {
 
         glPushMatrix();
-        glTranslatef(0.0f, 0.0f, 0.0f);
+        glTranslatef(butvex + 0.0f, 0.0f, 0.0f);
         glTranslatef(0.0f, -1.1f, 7.8f);
         glScalef(0.6f, 1.0f, 0.6f);
         glBegin(GL_QUAD_STRIP);
@@ -2030,7 +2032,6 @@ namespace moving {
 }
 
 
-//Clear the current window and draw a triangle
 void displayFunc(void) {
     // sky
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
@@ -2053,7 +2054,7 @@ void displayFunc(void) {
     //Draw
     drawAxes();
     // Floor first
-    //floorTile::drawFloor();
+    floorTile::drawFloor();
     
     // Latter part
     glEnable(GL_DEPTH_TEST);
@@ -2067,26 +2068,19 @@ void displayFunc(void) {
     //part2::drawChot3();
 
     moving::drawThanhButVe();
-    //moving::drawButVe();
-    /*moving::drawChot1();
+    moving::drawChot1();
     moving::drawTamTruot();
     moving::drawThanhLienKet();
     moving::drawChot2();
 
     base::drawRay();
     base::drawChanDe();
-    base::drawGiaDo();*/
-    
+    base::drawGiaDo();
 
-    if (animate == true) {
-        glutTimerFunc(1, animation, 0);
-    }
-
-    glFlush();
 
     //buffer
     glutSwapBuffers();
-    glutPostRedisplay();
+    //glutPostRedisplay();
 }
 
 void motionFunc(int x, int y) {
@@ -2138,9 +2132,18 @@ void reshapeFunc(int w, int h) {
 void animation(int state) {
     
     if (animate == true) {
-        part2::angle += 2.0f;
+        /*for (float counter = 0.0f; counter < 2 * M_PI; counter += 0.1f) {
+            std::cout << counter << std::endl;
+        }*/
+        float x = moving::butvex;
+        float z = moving::butvez;
+        glBegin(GL_POINTS); {
+            glVertex3f(x, 0.0f, z);
+        }
+        glEnd();
+        moving::angle += 2.0f;
         glutPostRedisplay();
-        glutTimerFunc(1000 / 60, animation, 0);
+        glutTimerFunc(100, animation, 0);
     }
     
 }
@@ -2170,8 +2173,9 @@ int main(int argc, char** argv) {
     //Set cam distance by mouse scroll
     glutMouseWheelFunc(mousewheelFunc);
 
-
-
+    if (animate == true) {
+        animation(1);
+    }
     //Tell GLUT to start raeding and processing event. This function never return
     //The program only exit when user close the main window or kill the process
     glutMainLoop();

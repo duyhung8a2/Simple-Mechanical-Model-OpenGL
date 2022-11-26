@@ -1546,12 +1546,13 @@ namespace base {
 }
 namespace moving {
     float angle = 0.01f;
-    float butvedis = 0.9f;
+    float butvedis = 0.8f;
     float butvedis_max = butvedis;
     float butvedis_min = 0.1f;
     float butvex = 0.0f;
     float butvez = 0.0f;
     float lienketAngle = 0.0f;
+    float thanhTruotDis = 8.0f;
     // Test draw 
     void drawHinhVuong() {
 
@@ -1605,9 +1606,9 @@ namespace moving {
             butvedis = butvedis_min;
         }
         butvex = sin(-angle * M_PI / 180) * butvedis * 4.0f;
-        butvez = cos(-angle * M_PI / 180) * butvedis * 4.0f;
+        butvez = cos(-angle * M_PI / 180) * butvedis * 5.0f ;
         glPushMatrix();
-        glTranslatef(butvex , 0.0f, butvez -2.0f);
+        //glTranslatef(butvex , 0.0f, -butvez -2.0f);
         glTranslatef(0.0f, 1.9f, 10.0f);
         glRotatef(270, 1.0f, 0.0f, 0.0f);
         glScalef(0.5f, 0.5f, 0.5f);
@@ -1653,13 +1654,13 @@ namespace moving {
     }
 
     void drawThanhButVe() {
-        lienketAngle = atan2(butvex , butvez - 1.0f) / M_PI * 180;
+        lienketAngle = atan2(butvex , butvez - 1.2f) / M_PI * 180;
         glPushMatrix();
 
-        glTranslatef(0.0f, 2.0f, butvez + 2.5f);
+        glTranslatef(0.0f, 2.0f, -butvez + thanhTruotDis);
         glRotatef(lienketAngle, 0.f, 1.0f, 0.f);
         
-        glRotatef(-180, 0.0f, 1.0f, 0.0f);
+        //glRotatef(-180, 0.0f, 1.0f, 0.0f);
         glTranslatef(0.0f, 0.0f, 5.0f);
         glScalef(0.5f, 2.0f, 5.0f);
         
@@ -1709,7 +1710,7 @@ namespace moving {
         glPushMatrix();
         //glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
         glScalef(1.0f, 0.2f, 1.0f);
-        glTranslatef(0.0f, 11.0f, butvez + 2.2f);
+        glTranslatef(0.0f, 11.0f, -butvez + thanhTruotDis);
         glBegin(GL_QUAD_STRIP);
         for (float k = 0; k <= 2 * M_PI; k += 0.01f) {
             glColor3f(0.3f, 0.9f, 0.4f);
@@ -1735,7 +1736,7 @@ namespace moving {
 
     void drawChot1() {
         glPushMatrix();
-        glTranslatef(0.0f, 1.1f, 2.1f);
+        glTranslatef(0.0f, 1.1f, -butvez + thanhTruotDis);
         glScalef(0.5f, 2.0f, 0.5f);
         glBegin(GL_QUAD_STRIP);
         for (float k = 0; k <= 2 * M_PI; k += 0.01f) {
@@ -1763,7 +1764,7 @@ namespace moving {
     void drawTamTruot() {
         
         glPushMatrix();
-        glTranslatef(0.0f, 0.0f, butvez + 2.2f);
+        glTranslatef(0.0f, 0.0f, -butvez + thanhTruotDis);
         glScalef(1.5f, 10.0f, 1.0f);
         glBegin(GL_QUADS); {
             glColor3f(0.0f, 0.0f, 1.0f);
@@ -2007,17 +2008,16 @@ void displayFunc(void) {
     //part2::drawThanhLienKet();
     //part2::drawChot3();
 
-    //test::drawTest();
     moving::drawThanhButVe();
     moving::drawButVe();
-    //moving::drawChot1();
+    moving::drawChot1();
     moving::drawTamTruot();
-    //moving::drawThanhLienKet();
-    //moving::drawChot2();
+    moving::drawThanhLienKet();
+    moving::drawChot2();
 
-   /* base::drawRay();
+    base::drawRay();
     base::drawChanDe();
-    base::drawGiaDo();*/
+    base::drawGiaDo();
     
 
     if (animate == true) {
@@ -2056,7 +2056,7 @@ void keyboardFunc(unsigned char key, int x, int y) {
         case '3': part2::chot2dis += 0.1f; break;
         case '4': part2::chot2dis -= 0.1f; break;
         case 'x': case 'X': toggleAxes = !toggleAxes; std::cout << toggleAxes; break;
-        case 'a': case 'A': animate = !animate;
+        case 'a': case 'A': animate = !animate; std::cout << animate;
     }
 }
 
@@ -2080,7 +2080,7 @@ void reshapeFunc(int w, int h) {
 void animation(int state) {
     
     if (animate == true) {
-        part2::angle += 0.001f;
+        part2::angle += 2.0f;
         glutPostRedisplay();
         glutTimerFunc(1000 / 60, animation, 0);
     }

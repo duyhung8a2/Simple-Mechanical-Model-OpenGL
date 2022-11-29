@@ -1,6 +1,5 @@
 ﻿
 #include <math.h>
-//#include <GL\glew.h>
 //#include <GL/glut.h>
 #include <GL\freeglut.h>
 #include <iostream>
@@ -24,6 +23,7 @@ static char floorMap[100];
 static bool light2 = true;
 static bool toggleAxes = false;
 static bool animate = false;
+static bool mouseControl = false;
 
 static float animationStartAngle = 0.0f;
 static bool firstTimeAnimate = false;
@@ -44,7 +44,7 @@ void drawAxes()
 {
     if (toggleAxes == true) {
         /*  Length of axes */
-        double len = 20.0f;
+        double len = 40.0f;
         glColor3f(1.0, 0.0, 0.0);
         glBegin(GL_LINES);
         glVertex3d(0, 0, 0);
@@ -1387,17 +1387,13 @@ void displayFunc(void) {
     glEnable(GL_LIGHT0);
     if (light2) glEnable(GL_LIGHT2); else glDisable(GL_LIGHT2);
     
-    if (wire == true && animate == false) {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    }
-    else if (wire == true && animate == true) {
+    if (wire == true ) {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     }
     else {
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     }
     
-
     //Draw
     base::drawRay();
     base::drawChanDe();
@@ -1410,27 +1406,28 @@ void displayFunc(void) {
     moving::drawChot2();
     moving::drawPoint2();
 
- 
-
     //buffer
     glutSwapBuffers();
     glutPostRedisplay();
 }
 
 void motionFunc(int x, int y) {
-    static int px = 0;
-    static int py = 0;
+    if (mouseControl == true) {
+        static int px = 0;
+        static int py = 0;
 
-    if (px || py) {
-        camDirection += (float)(x - px) / 50.f;
-        camZ += (float)(y - py) / 10.f;
-        if (camZ < 1.f) {
-            camZ = 1.f;
+        if (px || py) {
+            camDirection += (float)(x - px) / 50.f;
+            camZ += (float)(y - py) / 10.f;
+            if (camZ < 1.f) {
+                camZ = 1.f;
+            }
         }
+
+        px = x;
+        py = y;
     }
 
-    px = x;
-    py = y;
 }
 void keyboardFunc(unsigned char key, int x, int y) {
     switch (key) {
@@ -1442,6 +1439,7 @@ void keyboardFunc(unsigned char key, int x, int y) {
         case 'x': case 'X': toggleAxes = !toggleAxes; break;
         case 'a': case 'A': animate = !animate; firstTimeAnimate = true;         glutTimerFunc(0, animation, 0); break;
         case 'w': case 'W': wire = !wire; break;
+        case 'm': case 'M': mouseControl = !mouseControl; break;
     }
 }
 
@@ -1459,7 +1457,7 @@ void mousewheelFunc(int button, int dir, int x, int y) {
 void reshapeFunc(int w, int h) {
     glViewport(0, 0, w, h);
     ratio = w / h;
-    std::cout << "W: " << w << " H: " << h << std::endl;
+    //std::cout << "W: " << w << " H: " << h << std::endl;
 }
 
 void animation(int time_counter) {
@@ -1473,10 +1471,10 @@ void animation(int time_counter) {
 void specialFunc(int key, int x, int y) {
     switch (key) {
     case GLUT_KEY_LEFT:
-        camDirection += 0.1f;
+        camDirection -= 0.1f;
         break;
     case GLUT_KEY_RIGHT:
-        camDirection -= 0.1f;
+        camDirection += 0.1f;
         break;
     case GLUT_KEY_UP:
         camZ += 0.2f;
@@ -1507,14 +1505,28 @@ int main(int argc, char** argv) {
     glutKeyboardFunc(keyboardFunc);
     //Set cam direction as mouse clicking position
     glutMotionFunc(motionFunc);
+
     //Set cam distance by mouse scroll
     glutMouseWheelFunc(mousewheelFunc);
 
     initGraphic();
 
-    //animation(0);
-    //Tell GLUT to start raeding and processing event. This function never return
-    //The program only exit when user close the main window or kill the process
+    std::cout << "1     : Di chuyen tam truot len tren" << std::endl;
+    std::cout << "2     : Di chuyen tam truot xuong duoi" << std::endl;
+    std::cout << "W, w  : Chuyen doi qua lai giua che do khung day va to mau" << std::endl;
+    std::cout << "V, v  : Chuyen doi qua lai giua che do 2D va 3D" << std::endl;
+    std::cout << "A, a  : Bat tat che do hoat hinh" << std::endl;
+    std::cout << "+     : Tang khoang cach camera" << std::endl;
+    std::cout << "-     : Giam khoang cach camera" << std::endl;
+    std::cout << "Up arrow     : Tang chieu cao camera" << std::endl;
+    std::cout << "Down arrow   : Giam chieu cao camera" << std::endl;
+    std::cout << "<-           : Quay camera theo chieu kim dong ho" << std::endl;
+    std::cout << "->           : Quay camera nguoc chieu kim dong ho" << std::endl;
+    std::cout << "Chuc nang them:" << std::endl;
+    std::cout << "X, x  : Bat/tat truc xyz" << std::endl;
+    std::cout << "M, m  : Bat/tat che do quay camera bang chuot" << std::endl;
+    std::cout << "Lan chuot de dieu chinh do xa camera" << std::endl;
+
     glutMainLoop();
 
     

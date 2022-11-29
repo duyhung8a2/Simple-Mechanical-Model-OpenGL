@@ -1,183 +1,14 @@
-
+﻿
 #include <math.h>
-#include <GL\glew.h>
+//#include <GL\glew.h>
+//#include <GL/glut.h>
 #include <GL\freeglut.h>
 #include <iostream>
-
 /*
-//Class Point3 to define a point in 3D world
-class Point3
-{
-public:
-    float x, y, z;
-    void set(float dx, float dy, floatdz)
-    {
-        x = dx; y = dy; z = dz;
-    }
-    void set(Point3& p)
-    {
-        x = p.x; y = p.y; z = p.z;
-    }
-    Point3()
-    {
-        x = 0; y = 0; z = 0;
-    }
-    Point3(float dx, float dy, float dz)
-    {
-        x = dx; y = dy; z = dz;
-    }
-};
-
-class Color3
-{
-public:
-    float r, g, b;
-    void set(float red, float green, float blue)
-    {
-        r = red; g = green; b = blue;
-    }
-    void set(Color3& c)
-    {
-        r = c.r; g = c.g; b = c.b;
-    }
-    Color3() { r = g = b = 0; }
-    Color3(float red, float green, float blue)
-    {
-        r = red; g = green; b = blue;
-    }
-};
-
-class Point2
-{
-public:
-    Point2() { x = y = 0.0f; } // constructor 1
-    Point2(float xx, float yy) { x = xx; y = yy; } // constructor 2
-    void set(float xx, float yy) { x = xx; y = yy; }
-    float getX() { return x; }
-    float getY() { return y; }
-    void draw() {
-        glBegin(GL_POINTS);
-        glVertex2f((GLfloat)x, (GLfloat)y);
-        glEnd();
-    }
-private:
-    float 	x, y;
-};
-
-class RealRect
-{
-public:
-    RealRect() { l = 0; r = 100; b = 0; t = 100; }
-    RealRect(float left, float, right, float, bottom, float top)
-    {
-        l = left; r = right; b = bottom; t = top;
-    }
-    void set(float left, float, right, float, bottom, float top)
-    {
-        l = left; r = right; b = bottom; t = top;
-    }
-    float getWidth()
-    {
-        return (r - l);
-    }
-    float getHeight()
-    {
-        return (t - b);
-    }
-    void RealRect::draw()
-    {
-        glRectf(l, b, r, t);
-        glFlush();
-    };
-private:
-    float l, r, b, t;
-};
-
-class Vector3
-{
-public:
-    float x, y, z;
-    void set(float dx, float, dy, float dz)
-    {
-        x = dx; y = dy; z = dz;
-    }
-    void set(Vector3& v)
-    {
-        x = v.x; y = v.y; z = v.z;
-    }
-    void flip()
-    {
-        x = -x; y = -y; z = -z;
-    }
-    Vector3()
-    {
-        x = y = z = 0;
-    }
-    Vector3(float dx, float, dy, float dz)
-    {
-        x = dx; y = dy; z = dz;
-    }
-    Vector3(Vector3& v)
-    {
-        x = v.x; y = v.y; z = v.z;
-    }
-    void Vector3::normalize()
-    {
-        float temp = sqrt(x * x + y * y + z * z);
-        x = x / temp;
-        y = y / temp;
-        z = z / temp;
-    }
-    float Vector3::dot(Vector3 b)
-    {
-        return x * b.x + y * b.y + z * b.z;
-    }
-    Vector3 Vector3::cross(Vector3 b)
-    {
-        Vector3 c(y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.x);
-        return c;
-    }
-};
-
-
-//Clear the current window and draw a triangle
-void display(void) {
-    //Set every pixel in the frame buffer to the current clear color.
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    //Drawing is done by specifying a sequence of vertices. The way these vertices are connected
-    //depends on the argument to glBegin. GL_POLYGON construct a filled polygon.
-    RealRect ex1;
-    ex1.draw();
-    glBegin(GL_POLYGON);
-        glColor3f(1, 0, 0); glVertex3f(-0.6, -0.75, 0.5);
-        glColor3f(0, 1, 0); glVertex3f(0.6, -0.75, 0);
-        glColor3f(0, 0, 1); glVertex3f(0, 0.75, 0);
-    glEnd();
-    
-    //Flush drawing command buffer to make drawing happen as soon as possible
-    glFlush();
-}
-
-int main(int argc, char** argv) {
-    //Init GLUT
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-
-    //Set window position
-    glutInitWindowSize(600, 600);      // window size
-    //glutInitWindowPosition(500, 500);  // distance from the top-left screen
-    glutCreateWindow("Hello world");    // message displayed on top bar window
-
-    //Tell GLUT whenever main window needs to be repainted that it should call the function display() 
-    glutDisplayFunc(display);
-
-    //Tell GLUT to start raeding and processing event. This function never return
-    //The program only exit when user close the main window or kill the process
-    glutMainLoop();
-        
-}
+Neu thay chay loi xin thay hay thay thu vien a, em xai freeglut
 */
+
+
 #define WINDOW_WIDTH 600
 #define WINDOW_HEIGHT 600
 #define M_PI 3.14159265358979323846
@@ -186,607 +17,29 @@ static float camZ = 10.f;
 static float ratio = WINDOW_WIDTH / WINDOW_HEIGHT;
 static float camDirection = 2.f;
 static int drawMode = GL_TRIANGLES;
-static float camDistance = 30.f;
+static float camDistance = 40.f;
 static bool wire = false;
 static bool ortho = false;
 static char floorMap[100];
 static bool light2 = true;
-static bool toggleAxes = true;
-static bool animate = true;
+static bool toggleAxes = false;
+static bool animate = false;
+
+static float animationStartAngle = 0.0f;
+static bool firstTimeAnimate = false;
+
+static float rotationSpeed = 0.5f;
+static float FPS = 60;
+
+static float smoothRate = 0.3f;
 
 void animation(int animate);
-
-void drawGiaDo() {
-    glPushMatrix();
-    glBegin(GL_QUADS); {
-        glColor3f(0.2f, 0.9f, 0.4f);
-        // botom
-        glNormal3f(0.f, 0.f, -1.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        // top
-        glNormal3f(0.f, 0.0f, 1.0f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        glVertex3f(1.f, 0.f, 1.f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        // front
-        glNormal3f(0.f, 1.0f, 0.f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        // back
-        glNormal3f(0.f, -1.f, 0.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, 1.f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        // left
-        glNormal3f(-1.f, 0.f, 0.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        // right
-        glNormal3f(1.f, 0.f, 0.f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(1.f, 0.f, 1.f);
-    }
-    glEnd();
-    glScalef(0.2f, 0.2f, 15.f);
-    glBegin(GL_QUADS); {
-        glColor3f(0.1f, 0.4f, 0.9f);
-        // botom
-        glNormal3f(0.f, 0.f, -1.f);
-        glVertex3f(-3.f, -1.f, 0.0f);
-        glVertex3f(3.f, -1.f, 0.0f);
-        glVertex3f(3.f, 1.f, 0.0f);
-        glVertex3f(-3.f, 1.f, 0.0f);
-        // top
-        glNormal3f(0.f, 0.0f, 1.0f);
-        glVertex3f(-3.f, -1.f, 0.5f);
-        glVertex3f(3.f, -1.f, 0.5f);
-        glVertex3f(3.f, 1.f, 0.5f);
-        glVertex3f(-3.f, 1.f, 0.5f);
-        // front
-        glNormal3f(0.f, 1.f, 0.f);
-        glVertex3f(-3.f, 1.f, 0.0f);
-        glVertex3f(3.f, 1.f, 0.0f);
-        glVertex3f(3.f, 1.f, 0.5f);
-        glVertex3f(-3.f, 1.f, 0.5f);
-        // back
-        glNormal3f(0.f, -1.f, 0.f);
-        glVertex3f(-3.f, -1.f, 0.0f);
-        glVertex3f(3.f, -1.f, 0.0f);
-        glVertex3f(3.f, -1.f, 0.5f);
-        glVertex3f(-3.f, -1.f, 0.5f);
-        // left
-        glNormal3f(-1.f, 0.f, 0.f);
-        glVertex3f(-3.f, -1.f, 0.0f);
-        glVertex3f(-3.f, 1.f, 0.0f);
-        glVertex3f(-3.f, 1.f, 0.5f);
-        glVertex3f(-3.f, -1.f, 0.5f);
-        // right
-        glNormal3f(1.f, 0.f, 0.f);
-        glVertex3f(3.f, -1.f, 0.0f);
-        glVertex3f(3.f, 1.f, 0.0f);
-        glVertex3f(3.f, 1.f, 0.5f);
-        glVertex3f(3.f, -1.f, 0.5f);
-    }
-    glEnd();
-
-}
-namespace part2 {
-    float angle = 0.0f;
-    float chot2x = 0.f;
-    float chot2z = 0.f;
-    float chot2dis = 0.9f;
-    float lienKetAngle = 0.f;
-
-void drawThanhLienKet() {
-    lienKetAngle = atan2(chot2x, chot2z - 1.f) / M_PI * 180;
-    glPushMatrix();
-    glTranslatef(0.f, 0.61f, 1.f);
-    glRotatef(lienKetAngle, 0.f, 1.f, 0.f);
-    glScalef(0.1f, 1.0f, 0.2f);
-    glScalef(1.f, 1.f, 15.f);
-    glTranslatef(-3.f, 0.f, 1.f);
-    //thanh lien ket ben trai
-    glBegin(GL_QUADS); {
-        glColor3f(0.2f, 0.9f, 0.4f);
-        // botom
-        glNormal3f(0.f, 0.f, -1.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        // top
-        glNormal3f(0.f, 0.0f, 1.0f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        glVertex3f(1.f, 0.f, 1.f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        // front
-        glNormal3f(0.f, 1.0f, 0.f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        // back
-        glNormal3f(0.f, -1.f, 0.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, 1.f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        // left
-        glNormal3f(-1.f, 0.f, 0.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        // right
-        glNormal3f(1.f, 0.f, 0.f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(1.f, 0.f, 1.f);
-    }
-    glEnd();
-
-    //thanh lien ket ben phai
-    glTranslatef(6.f, 0.f, 0.f);
-    glBegin(GL_QUADS); {
-        glColor3f(0.2f, 0.9f, 0.4f);
-        // bottom
-        glNormal3f(0.f, 0.f, -1.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        // top
-        glNormal3f(0.f, 0.0f, 1.0f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        glVertex3f(1.f, 0.f, 1.f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        // front
-        glNormal3f(0.f, 1.0f, 0.f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        // back
-        glNormal3f(0.f, -1.f, 0.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, 1.f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        // left
-        glNormal3f(-1.f, 0.f, 0.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        // right
-        glNormal3f(1.f, 0.f, 0.f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(1.f, 0.f, 1.f);
-    }
-    glEnd();
-    
-    //glTranslatef(-3.f, 0.f, -0.9f);
-    glTranslatef(-3.0f, 0.0f, -0.9f);
-    glScalef(2.f, 1.f, 0.1f);
-    glBegin(GL_QUADS); {
-        glColor3f(0.2f, 0.9f, 0.4f);
-        // botom
-        glNormal3f(0.f, 0.f, -1.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        // top
-        glNormal3f(0.f, 0.0f, 1.0f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        glVertex3f(1.f, 0.f, 1.f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        // front
-        glNormal3f(0.f, 1.0f, 0.f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        // back
-        glNormal3f(0.f, -1.f, 0.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, 1.f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        // left
-        glNormal3f(-1.f, 0.f, 0.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        // right
-        glNormal3f(1.f, 0.f, 0.f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(1.f, 0.f, 1.f);
-    }
-    glEnd();
-    //glTranslatef(0.f, 0.f, 34.f);
-    //glScalef(1.f, 1.f, 2.f);
-    //glBegin(GL_QUADS); {
-    //    glColor3f(0.2f, 0.9f, 0.4f);
-    //    // botom
-    //    glNormal3f(0.f, 0.f, -1.f);
-    //    glVertex3f(-1.f, 0.f, -1.0f);
-    //    glVertex3f(1.f, 0.f, -1.0f);
-    //    glVertex3f(1.f, 0.2f, -1.0f);
-    //    glVertex3f(-1.f, 0.2f, -1.0f);
-    //    // top
-    //    glNormal3f(0.f, 0.0f, 1.0f);
-    //    glVertex3f(-1.f, 0.f, 1.f);
-    //    glVertex3f(1.f, 0.f, 1.f);
-    //    glVertex3f(1.f, 0.2f, 1.f);
-    //    glVertex3f(-1.f, 0.2f, 1.f);
-    //    // front
-    //    glNormal3f(0.f, 1.0f, 0.f);
-    //    glVertex3f(-1.f, 0.2f, -1.0f);
-    //    glVertex3f(1.f, 0.2f, -1.0f);
-    //    glVertex3f(1.f, 0.2f, 1.f);
-    //    glVertex3f(-1.f, 0.2f, 1.f);
-    //    // back
-    //    glNormal3f(0.f, -1.f, 0.f);
-    //    glVertex3f(-1.f, 0.f, -1.0f);
-    //    glVertex3f(1.f, 0.f, -1.0f);
-    //    glVertex3f(1.f, 0.f, 1.f);
-    //    glVertex3f(-1.f, 0.f, 1.f);
-    //    // left
-    //    glNormal3f(-1.f, 0.f, 0.f);
-    //    glVertex3f(-1.f, 0.f, -1.0f);
-    //    glVertex3f(-1.f, 0.2f, -1.0f);
-    //    glVertex3f(-1.f, 0.2f, 1.f);
-    //    glVertex3f(-1.f, 0.f, 1.f);
-    //    // right
-    //    glNormal3f(1.f, 0.f, 0.f);
-    //    glVertex3f(1.f, 0.f, -1.0f);
-    //    glVertex3f(1.f, 0.2f, -1.0f);
-    //    glVertex3f(1.f, 0.2f, 1.f);
-    //    glVertex3f(1.f, 0.f, 1.f);
-    //}
-    //glEnd();
-    glPopMatrix();
+void initGraphic() {
+    glDepthFunc(GL_LEQUAL);
+    glShadeModel(GL_SMOOTH);
+    glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
 }
 
-void drawChot3() {
-    glPushMatrix();
-    glTranslatef(0.f, 0.61f, 1.f);
-    glRotatef(lienKetAngle, 0.f, 1.f, 0.f);
-    glScalef(0.4f, 1.0f, 0.4f);
-    glBegin(GL_TRIANGLES); {
-        glNormal3f(0.f, -1.f, 0.f);
-        glColor3f(0.2f, 0.9f, 0.4f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glVertex3f(0, 0, 0);
-            glVertex3f(cos(i), 0, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0, sin(i + M_PI / 64.f));
-        }
-        glNormal3f(0.f, 1.f, 0.f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glVertex3f(0, 0.2f, 0);
-            glVertex3f(cos(i), 0.2f, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0.2f, sin(i + M_PI / 64.f));
-        }
-    }
-    glEnd();
-    glBegin(GL_QUADS); {
-        glColor3f(0.2f, 0.9f, 0.4f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glNormal3f(cos(i), 0.f, sin(i));
-            glVertex3f(cos(i), 0.2, sin(i));
-            glVertex3f(cos(i), 0.0, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0.0, sin(i + M_PI / 64.f));
-            glVertex3f(cos(i + M_PI / 64.f), 0.2, sin(i + M_PI / 64.f));
-        }
-    }
-    glEnd();
-    //
-    //
-    glTranslatef(0.f, 0.f, 15.f);
-    glBegin(GL_TRIANGLES); {
-        glNormal3f(0.f, -1.f, 0.f);
-        glColor3f(0.2f, 0.9f, 0.4f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glVertex3f(0, 0, 0);
-            glVertex3f(cos(i), 0, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0, sin(i + M_PI / 64.f));
-        }
-        glNormal3f(0.f, 1.f, 0.f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glVertex3f(0, 0.2f, 0);
-            glVertex3f(cos(i), 0.2f, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0.2f, sin(i + M_PI / 64.f));
-        }
-    }
-    glEnd();
-    glBegin(GL_QUADS); {
-        glColor3f(0.2f, 0.9f, 0.4f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glNormal3f(cos(i), 0.f, sin(i));
-            glVertex3f(cos(i), 0.2, sin(i));
-            glVertex3f(cos(i), 0.0, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0.0, sin(i + M_PI / 64.f));
-            glVertex3f(cos(i + M_PI / 64.f), 0.2, sin(i + M_PI / 64.f));
-        }
-    }
-    glEnd();
-    glTranslatef(0.f, -0.75f, -15.f);
-    //
-    glScalef(0.5f, 5.f, 0.5f);
-    glBegin(GL_TRIANGLES); {
-        glNormal3f(0.f, -1.f, 0.f);
-        glColor3f(0.4f, 0.5f, 0.4f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glVertex3f(0, 0, 0);
-            glVertex3f(cos(i), 0, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0, sin(i + M_PI / 64.f));
-        }
-        glNormal3f(0.f, 1.f, 0.f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glVertex3f(0, 0.2f, 0);
-            glVertex3f(cos(i), 0.2f, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0.2f, sin(i + M_PI / 64.f));
-        }
-    }
-    glEnd();
-    glBegin(GL_QUADS); {
-        glColor3f(0.4f, 0.5f, 0.4f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glNormal3f(cos(i), 0.f, sin(i));
-            glVertex3f(cos(i), 0.2, sin(i));
-            glVertex3f(cos(i), 0.0, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0.0, sin(i + M_PI / 64.f));
-            glVertex3f(cos(i + M_PI / 64.f), 0.2, sin(i + M_PI / 64.f));
-        }
-    }
-    glEnd();
-    glPopMatrix();
-}
-
-void drawChot2() {
-    chot2dis = chot2dis > 0.9f ? 0.9f : chot2dis < 0.1f ? 0.1f : chot2dis;
-    std::cout << chot2dis;
-    chot2x = cos(-angle * M_PI / 180) * chot2dis;
-    chot2z = sin(-angle * M_PI / 180) * chot2dis + 3.5f;
-
-    glPushMatrix();
-    glTranslatef(chot2x, 0.61, chot2z);
-    glRotatef(lienKetAngle, 0.f, 1.f, 0.f);
-    glScalef(0.2f, 1.f, 0.2f);
-    glBegin(GL_QUADS); {
-        glColor3f(0.9f, 0.3f, 0.3f);
-        // botom
-        glNormal3f(0.f, 0.f, -1.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        // top
-        glNormal3f(0.f, 0.0f, 1.0f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        glVertex3f(1.f, 0.f, 1.f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        // front
-        glNormal3f(0.f, 1.0f, 0.f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        // back
-        glNormal3f(0.f, -1.f, 0.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.f, 1.f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        // left
-        glNormal3f(-1.f, 0.f, 0.f);
-        glVertex3f(-1.f, 0.f, -1.0f);
-        glVertex3f(-1.f, 0.2f, -1.0f);
-        glVertex3f(-1.f, 0.2f, 1.f);
-        glVertex3f(-1.f, 0.f, 1.f);
-        // right
-        glNormal3f(1.f, 0.f, 0.f);
-        glVertex3f(1.f, 0.f, -1.0f);
-        glVertex3f(1.f, 0.2f, -1.0f);
-        glVertex3f(1.f, 0.2f, 1.f);
-        glVertex3f(1.f, 0.f, 1.f);
-    }
-    glEnd();
-    //
-    glTranslatef(0.f, 0.2f, 0.f);
-    glScalef(0.5f, 0.5f, 0.5f);
-    glBegin(GL_TRIANGLES); {
-        glNormal3f(0.f, -1.f, 0.f);
-        glColor3f(0.4f, 0.5f, 0.4f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glVertex3f(0, 0, 0);
-            glVertex3f(cos(i), 0, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0, sin(i + M_PI / 64.f));
-        }
-        glNormal3f(0.f, 1.f, 0.f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glVertex3f(0, 0.2f, 0);
-            glVertex3f(cos(i), 0.2f, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0.2f, sin(i + M_PI / 64.f));
-        }
-    }
-    glEnd();
-    glBegin(GL_QUADS); {
-        glColor3f(0.4f, 0.5f, 0.4f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glNormal3f(cos(i), 0.f, sin(i));
-            glVertex3f(cos(i), 0.2, sin(i));
-            glVertex3f(cos(i), 0.0, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0.0, sin(i + M_PI / 64.f));
-            glVertex3f(cos(i + M_PI / 64.f), 0.2, sin(i + M_PI / 64.f));
-        }
-    }
-    glEnd();
-    glPopMatrix();
-}
-
-void drawTayQuay() {
-    glPushMatrix();
-    glTranslatef(0.f, 0.41f, 3.5f);
-    glRotatef(angle, 0.f, 1.f, 0.f);
-    glScalef(0.3f, 1.f, 0.3f);
-    glBegin(GL_TRIANGLES); {
-        glNormal3f(0.f, -1.f, 0.f);
-        glColor3f(0.9f, 0.5f, 0.3f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glVertex3f(0, 0, 0);
-            glVertex3f(cos(i), 0, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0, sin(i + M_PI / 64.f));
-        }
-        glNormal3f(0.f, 1.f, 0.f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glVertex3f(0, 0.2f, 0);
-            glVertex3f(cos(i), 0.2f, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0.2f, sin(i + M_PI / 64.f));
-        }
-    }
-    glEnd();
-    glBegin(GL_QUADS); {
-        glColor3f(0.9f, 0.5f, 0.3f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glNormal3f(cos(i), 0.f, sin(i));
-            glVertex3f(cos(i), 0.2, sin(i));
-            glVertex3f(cos(i), 0.0, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0.0, sin(i + M_PI / 64.f));
-            glVertex3f(cos(i + M_PI / 64.f), 0.2, sin(i + M_PI / 64.f));
-        }
-    }
-    glEnd();
-    //
-    // 
-    glBegin(GL_QUADS); {
-        glColor3f(0.9f, 0.5f, 0.3f);
-        // botom
-        glNormal3f(0.f, 0.f, -1.f);
-        glVertex3f(-0.f, 0.f, -1.0f);
-        glVertex3f(3.f, 0.f, -1.0f);
-        glVertex3f(3.f, 0.2f, -1.0f);
-        glVertex3f(-0.f, 0.2f, -1.0f);
-        // top
-        glNormal3f(0.f, 0.0f, 1.0f);
-        glVertex3f(-0.f, 0.f, 1.f);
-        glVertex3f(3.f, 0.f, 1.f);
-        glVertex3f(3.f, 0.2f, 1.f);
-        glVertex3f(-0.f, 0.2f, 1.f);
-        // front
-        glNormal3f(0.f, 1.0f, 0.f);
-        glVertex3f(-0.f, 0.2f, -1.0f);
-        glVertex3f(3.f, 0.2f, -1.0f);
-        glVertex3f(3.f, 0.2f, 1.f);
-        glVertex3f(-0.f, 0.2f, 1.f);
-        // back
-        glNormal3f(0.f, -1.f, 0.f);
-        glVertex3f(-0.f, 0.f, -1.0f);
-        glVertex3f(3.f, 0.f, -1.0f);
-        glVertex3f(3.f, 0.f, 1.f);
-        glVertex3f(-0.f, 0.f, 1.f);
-        // left
-        glNormal3f(-1.f, 0.f, 0.f);
-        glVertex3f(-0.f, 0.f, -1.0f);
-        glVertex3f(-0.f, 0.2f, -1.0f);
-        glVertex3f(-0.f, 0.2f, 1.f);
-        glVertex3f(-0.f, 0.f, 1.f);
-        // right
-        glNormal3f(1.f, 0.f, 0.f);
-        glVertex3f(3.f, 0.f, -1.0f);
-        glVertex3f(3.f, 0.2f, -1.0f);
-        glVertex3f(3.f, 0.2f, 1.f);
-        glVertex3f(3.f, 0.f, 1.f);
-    }
-    glEnd();
-//
-glTranslatef(3.f, 0.f, 0.f);
-glBegin(GL_TRIANGLES); {
-    glNormal3f(0.f, -1.f, 0.f);
-    glColor3f(0.9f, 0.5f, 0.3f);
-    for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-        glVertex3f(0, 0, 0);
-        glVertex3f(cos(i), 0, sin(i));
-        glVertex3f(cos(i + M_PI / 64.f), 0, sin(i + M_PI / 64.f));
-    }
-    glNormal3f(0.f, 1.f, 0.f);
-    for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-        glVertex3f(0, 0.2f, 0);
-        glVertex3f(cos(i), 0.2f, sin(i));
-        glVertex3f(cos(i + M_PI / 64.f), 0.2f, sin(i + M_PI / 64.f));
-    }
-}
-glEnd();
-glBegin(GL_QUADS); {
-    glColor3f(0.9f, 0.5f, 0.3f);
-    for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-        glNormal3f(cos(i), 0.f, sin(i));
-        glVertex3f(cos(i), 0.2, sin(i));
-        glVertex3f(cos(i), 0.0, sin(i));
-        glVertex3f(cos(i + M_PI / 64.f), 0.0, sin(i + M_PI / 64.f));
-        glVertex3f(cos(i + M_PI / 64.f), 0.2, sin(i + M_PI / 64.f));
-    }
-}
-glEnd();
-glPopMatrix();
-}
-
-void drawBanQuay() {
-    glPushMatrix();
-    glTranslatef(0.f, 0.21f, 3.5f);
-    glRotatef(angle, 0.f, 1.f, 0.f);
-    glBegin(GL_TRIANGLES); {
-        glNormal3f(0.f, -1.f, 0.f);
-        glColor3f(0.9f, 0.3f, 0.3f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glVertex3f(0, 0, 0);
-            glVertex3f(cos(i), 0, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0, sin(i + M_PI / 64.f));
-        }
-        glNormal3f(0.f, 1.f, 0.f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glVertex3f(0, 0.2f, 0);
-            glVertex3f(cos(i), 0.2f, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0.2f, sin(i + M_PI / 64.f));
-        }
-    }
-    glEnd();
-    glBegin(GL_QUADS); {
-        glColor3f(0.9f, 0.3f, 0.3f);
-        for (float i = 0; i < M_PI * 2; i += M_PI / 64.f) {
-            glNormal3f(cos(i), 0.f, sin(i));
-            glVertex3f(cos(i), 0.2, sin(i));
-            glVertex3f(cos(i), 0.0, sin(i));
-            glVertex3f(cos(i + M_PI / 64.f), 0.0, sin(i + M_PI / 64.f));
-            glVertex3f(cos(i + M_PI / 64.f), 0.2, sin(i + M_PI / 64.f));
-        }
-    }
-    glEnd();
-    glPopMatrix();
-}
-}
 void drawAxes()
 {
     if (toggleAxes == true) {
@@ -1295,7 +548,7 @@ namespace base {
         // Top
         glBegin(GL_TRIANGLE_STRIP); {
             glColor3f(0.0f, 1.0f, 1.0f);
-            for (float i = 0.0; i <= M_PI; i += 0.01) {
+            for (float i = 0.0; i <= M_PI + smoothRate; i += smoothRate) {
                 glVertex3f((sin(i) * radius), (cos(i) * radius), 1.0f);
                 glVertex3f(4, (cos(i) * radius), 1.0f);
             }
@@ -1306,7 +559,7 @@ namespace base {
         glBegin(GL_TRIANGLE_STRIP); {
             glColor3f(0.0f, 1.0f, 1.0f);
             // Top
-            for (float i = 0.0; i <= M_PI; i += 0.01) {
+            for (float i = 0.0; i <= M_PI + smoothRate; i += smoothRate) {
                 glVertex3f((sin(i) * radius), (cos(i) * radius), -1.0f);
                 glVertex3f(4, (cos(i) * radius), -1.0f);
             }
@@ -1316,7 +569,7 @@ namespace base {
         glBegin(GL_TRIANGLE_STRIP); {
             glColor3f(0.0f, 1.0f, 1.0f);
             // Top
-            for (float i = 0.0; i <= M_PI; i += 0.01) {
+            for (float i = 0.0; i <= M_PI + smoothRate; i += smoothRate) {
                 glVertex3f((sin(i) * radius), (cos(i) * radius), -1.0f);
                 glVertex3f((sin(i) * radius), (cos(i) * radius), 1.0f);
             }
@@ -1354,7 +607,7 @@ namespace base {
         // Top
         glBegin(GL_TRIANGLE_STRIP); {
             glColor3f(0.0f, 1.0f, 1.0f);
-            for (float i = 0.0; i <= M_PI; i += 0.01) {
+            for (float i = 0.0; i <= M_PI + smoothRate; i += smoothRate) {
                 glVertex3f((sin(i) * radius), (cos(i) * radius), 1.0f);
                 glVertex3f(4, (cos(i) * radius), 1.0f);
             }
@@ -1365,7 +618,7 @@ namespace base {
         glBegin(GL_TRIANGLE_STRIP); {
             glColor3f(0.0f, 1.0f, 1.0f);
             // Top
-            for (float i = 0.0; i <= M_PI; i += 0.01) {
+            for (float i = 0.0; i <= M_PI + smoothRate; i += smoothRate) {
                 glVertex3f((sin(i) * radius), (cos(i) * radius), -1.0f);
                 glVertex3f(4, (cos(i) * radius), -1.0f);
             }
@@ -1375,7 +628,7 @@ namespace base {
         glBegin(GL_TRIANGLE_STRIP); {
             glColor3f(0.0f, 1.0f, 1.0f);
             // Top
-            for (float i = 0.0; i <= M_PI; i += 0.01) {
+            for (float i = 0.0; i <= M_PI + smoothRate; i += smoothRate) {
                 glVertex3f((sin(i) * radius), (cos(i) * radius), -1.0f);
                 glVertex3f((sin(i) * radius), (cos(i) * radius), 1.0f);
             }
@@ -1545,7 +798,7 @@ namespace base {
     }
 }
 namespace moving {
-    float angle = 0.01f;
+    float angle = 0.0f;
     float butvedis = 0.8f;
     float butvedis_max = butvedis;
     float butvedis_min = 0.1f;
@@ -1662,7 +915,7 @@ namespace moving {
         }
         butvex = sin(-angle * M_PI / 180) * butvedis * 3.0f;
         butvez = cos(-angle * M_PI / 180) * butvedis * 3.0f;
-        lienketAngle = atan2(butvex, butvez - 0.4f) / M_PI * 180;
+        lienketAngle = atan2(butvex, butvez - 0.3f) / M_PI * 180;
 
 
         glPushMatrix();
@@ -1719,17 +972,18 @@ namespace moving {
         glRotatef(270, 1.0f, 0.0f, 0.0f);
         glScalef(0.5f, 0.5f, 0.5f);
 
+
         //Pointy part
         glTranslatef(0.0f, 0.0f, 3.0f);
-        glScalef(1.0f, 1.0f, 0.8f);
+        glScalef(0.9f, 1.0f, 1.0f);
         glBegin(GL_TRIANGLES);
-        for (float k = 0; k <= 2 * M_PI; k += 0.01f) {
+        for (float k = 0; k <= 2 * M_PI ; k += smoothRate) {
             glColor3f(1.0f, 0.0f, 0.0f);
             glVertex3f(0.0f, 0.0f, 1.0f);
             glColor3f(1.0f, 0.0f, 0.0f);
             glVertex3f(cos(k), sin(k), 0.0f);
             glColor3f(1.0f, 0.0f, 0.0f);
-            glVertex3f(cos(k + 0.01f), sin(k + 0.01f), 0.0f);
+            glVertex3f(cos(k + smoothRate), sin(k + smoothRate), 0.0f);
         }
         glEnd();
 
@@ -1741,7 +995,7 @@ namespace moving {
         glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
         glTranslatef(0.0f, 1.4f, 0.0f);
         glBegin(GL_QUAD_STRIP);
-        for (float k = 0; k <= 2 * M_PI; k += 0.01f) {
+        for (float k = 0; k <= 2 * M_PI + smoothRate; k += smoothRate) {
             glColor3f(1.0f, 0.0f, 0.0f);
             glVertex3f(cos(k), +1.0f, sin(k));
             glColor3f(1.0f, 0.0f, 0.0f);
@@ -1754,7 +1008,7 @@ namespace moving {
             glBegin(GL_TRIANGLE_FAN);
             glColor3f(1.0, 0.0, 0.0);
             glVertex3f(0.0f, i, 0.0f);
-            for (float k = 0; k <= 2 * M_PI; k += 0.01f) {
+            for (float k = 0; k <= 2 * M_PI + smoothRate; k += smoothRate) {
                 glColor3f(1.0f, 0.0f, 0.0f);
                 glVertex3f(i * cos(k), i, sin(k));
             }
@@ -1768,9 +1022,9 @@ namespace moving {
         glPushMatrix();
         //glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
         glScalef(1.0f, 0.2f, 1.0f);
-        glTranslatef(0.0f, 11.0f, -butvez + thanhTruotDis);
+        glTranslatef(0.0f, 11.05f, -butvez + thanhTruotDis);
         glBegin(GL_QUAD_STRIP);
-        for (float k = 0; k <= 2 * M_PI; k += 0.01f) {
+        for (float k = 0; k <= 2 * M_PI + smoothRate; k += smoothRate) {
             glColor3f(0.3f, 0.9f, 0.4f);
             glVertex3f(cos(k), +1.0f, sin(k));
             glColor3f(0.3f, 0.9f, 0.4f);
@@ -1783,7 +1037,7 @@ namespace moving {
             glBegin(GL_TRIANGLE_FAN);
             glColor3f(0.3f, 0.9f, 0.4f);
             glVertex3f(0.0f, i, 0.0f);
-            for (float k = 0; k <= 2 * M_PI; k += 0.01f) {
+            for (float k = 0; k <= 2 * M_PI + smoothRate; k += smoothRate) {
                 glColor3f(0.3f, 0.9f, 0.4f);
                 glVertex3f(i * cos(k), i, sin(k));
             }
@@ -1797,7 +1051,7 @@ namespace moving {
         glTranslatef(0.0f, 1.1f, -butvez + thanhTruotDis);
         glScalef(0.5f, 2.0f, 0.5f);
         glBegin(GL_QUAD_STRIP);
-        for (float k = 0; k <= 2 * M_PI; k += 0.01f) {
+        for (float k = 0; k <= 2 * M_PI + smoothRate; k += smoothRate) {
             glColor3f(1.0f, 0.0f, 0.0f);
             glVertex3f(cos(k), +1.0f, sin(k));
             glColor3f(1.0f, 0.0f, 0.0f);
@@ -1810,7 +1064,7 @@ namespace moving {
             glBegin(GL_TRIANGLE_FAN);
             glColor3f(1.0f, 0.0f, 0.0f);
             glVertex3f(0.0f, i, 0.0f);
-            for (float k = 0; k <= 2 * M_PI; k += 0.01f) {
+            for (float k = 0; k <= 2 * M_PI + smoothRate; k += smoothRate) {
                 glColor3f(1.0f, 0.0f, 0.0f);
                 glVertex3f(i * cos(k), i, sin(k));
             }
@@ -2008,7 +1262,7 @@ namespace moving {
         glTranslatef(0.0f, -1.1f, 7.8f);
         glScalef(0.6f, 1.0f, 0.6f);
         glBegin(GL_QUAD_STRIP);
-        for (float k = 0; k <= 2 * M_PI; k += 0.001f) {
+        for (float k = 0; k <= 2 * M_PI + smoothRate; k += smoothRate) {
             glColor3f(1.0f, 0.0f, 0.0f);
             glVertex3f(cos(k), +1.0f, sin(k));
             glColor3f(1.0f, 0.0f, 0.0f);
@@ -2021,7 +1275,7 @@ namespace moving {
             glBegin(GL_TRIANGLE_FAN);
             glColor3f(1.0f, 0.0f, 0.0f);
             glVertex3f(0.0f, i, 0.0f);
-            for (float k = 0; k <= 2 * M_PI; k += 0.001f) {
+            for (float k = 0; k <= 2 * M_PI + smoothRate; k += smoothRate) {
                 glColor3f(1.0f, 0.0f, 0.0f);
                 glVertex3f(i * cos(k), i, sin(k));
             }
@@ -2029,18 +1283,81 @@ namespace moving {
         }
         glPopMatrix();
     }
+
+    void drawPoint2() {
+        if (animate == true) {
+            if (firstTimeAnimate == true) {
+                animationStartAngle = angle;
+                firstTimeAnimate = false;
+            }
+            int i = 0;
+            for (i = 0; (animationStartAngle + (rotationSpeed * i)) <= angle; i += 4) {
+                float butvexAnimate = sin(-(animationStartAngle + (rotationSpeed * i)) * M_PI / 180) * butvedis * 3.0f;
+                float butvezAnimate = cos((animationStartAngle + (rotationSpeed * i)) * M_PI / 180) * butvedis * 3.0f;
+                float lienketAngleAnimate = atan2(butvexAnimate, butvezAnimate - 0.4f) / M_PI * 180;
+                //std::cout << "Ve " << i << " lan" << std::endl;
+                glPushMatrix();
+                //ý tưởng, giữ một bản ghi ban đầu, sau đó iterate lần lượt đến hiện tại.
+                glTranslatef(0.0f, 0.0f, -butvezAnimate + thanhTruotDis);
+                glRotatef(lienketAngleAnimate, 0.f, 1.0f, 0.f);
+                glTranslatef(0.0f, 2.0f, 7.0f);
+                glPointSize(2.0);
+                glBegin(GL_POINTS); {
+                    glColor3f(1.0f, 0.9f, 0.4f);
+                    glVertex3f(0.2f, 2.0f, 0.2f);
+                }
+                glEnd();
+                glPopMatrix();
+
+            }
+            if (i <= int(360.0f / rotationSpeed) && i >= int(359.0f / rotationSpeed)) {
+                animate = false;
+            }
+        }
+    }
 }
 
+void drawSky() {
+    glBegin(GL_QUADS); {
+        glColor3f(1.f, 1.f, 0.8f);
+        glVertex2f(-1.f, -1.f);
+        glVertex2f(1.f, -1.f);
+        glColor3f(0.3f, 0.6f, 0.8f);
+        glVertex2f(1.f, 1.f);
+        glVertex2f(-1.f, 1.f);
+    }
+    glEnd();
+}
+
+void enableLight() {
+    GLfloat lightDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat lightSpecular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat	lightAmbient[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+    GLfloat light_position1[] = { -10.0f, 4.0f, 2.0f, 0.0f };
+    GLfloat light_position2[] = { 6.0f, -4.0f, 1.0f, 0.0f };
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position1);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, lightSpecular);
+    glLightfv(GL_LIGHT2, GL_POSITION, light_position2);
+    glLightfv(GL_LIGHT2, GL_DIFFUSE, lightDiffuse);
+    glLightfv(GL_LIGHT2, GL_AMBIENT, lightAmbient);
+    glLightfv(GL_LIGHT2, GL_SPECULAR, lightSpecular);
+}
 
 void displayFunc(void) {
     // sky
+    glDisable(GL_LIGHTING);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    drawSky();
     // camera
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     if (ortho) {
-        glOrtho(-10.f * ratio, 10.f * ratio, -10.f, 10.f, -10.f, 10.f);
+        glOrtho(-10.f * ratio, 10.f * ratio, -10.f, 20.f, -10.f, 10.f);
     }
     else {
         gluPerspective(45.f, ratio, 0.1f, 1000.0f);
@@ -2051,36 +1368,53 @@ void displayFunc(void) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    //Light
+    enableLight();
+
     //Draw
-    drawAxes();
+    if (toggleAxes == true) {
+        drawAxes();
+    }
+
     // Floor first
     floorTile::drawFloor();
-    
-    // Latter part
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
+    // Enable light
+    glEnable(GL_LIGHTING);
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+    glEnable(GL_LIGHT0);
+    if (light2) glEnable(GL_LIGHT2); else glDisable(GL_LIGHT2);
+    
+    if (wire == true && animate == false) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+    else if (wire == true && animate == true) {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+    else {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
+    
 
-    //drawGiaDo();
-    //part2::drawBanQuay();
-    //part2::drawTayQuay();
-    //part2::drawChot2();
-    //part2::drawThanhLienKet();
-    //part2::drawChot3();
+    //Draw
+    base::drawRay();
+    base::drawChanDe();
+    base::drawGiaDo();
 
     moving::drawThanhButVe();
     moving::drawChot1();
     moving::drawTamTruot();
     moving::drawThanhLienKet();
     moving::drawChot2();
+    moving::drawPoint2();
 
-    base::drawRay();
-    base::drawChanDe();
-    base::drawGiaDo();
-
+ 
 
     //buffer
     glutSwapBuffers();
-    //glutPostRedisplay();
+    glutPostRedisplay();
 }
 
 void motionFunc(int x, int y) {
@@ -2102,13 +1436,12 @@ void keyboardFunc(unsigned char key, int x, int y) {
     switch (key) {
         case '+': camDistance--; break;
         case '-': camDistance++; break;
-        case 'v': case 'V': ortho = !ortho;
-        case '1': part2::angle += 2.f; moving::angle += 2.0f; break;
-        case '2': part2::angle -= 2.f; moving::angle -= 2.0f; break;
-        case '3': part2::chot2dis += 0.1f; break;
-        case '4': part2::chot2dis -= 0.1f; break;
-        case 'x': case 'X': toggleAxes = !toggleAxes; std::cout << toggleAxes; break;
-        case 'a': case 'A': animate = !animate; std::cout << animate;
+        case 'v': case 'V': ortho = !ortho; break;
+        case '1': moving::angle += 2.0f; break;
+        case '2': moving::angle -= 2.0f; break;
+        case 'x': case 'X': toggleAxes = !toggleAxes; break;
+        case 'a': case 'A': animate = !animate; firstTimeAnimate = true;         glutTimerFunc(0, animation, 0); break;
+        case 'w': case 'W': wire = !wire; break;
     }
 }
 
@@ -2129,23 +1462,30 @@ void reshapeFunc(int w, int h) {
     std::cout << "W: " << w << " H: " << h << std::endl;
 }
 
-void animation(int state) {
-    
-    if (animate == true) {
-        /*for (float counter = 0.0f; counter < 2 * M_PI; counter += 0.1f) {
-            std::cout << counter << std::endl;
-        }*/
-        float x = moving::butvex;
-        float z = moving::butvez;
-        glBegin(GL_POINTS); {
-            glVertex3f(x, 0.0f, z);
-        }
-        glEnd();
-        moving::angle += 2.0f;
+void animation(int time_counter) {
+    if (animate == true && time_counter == 0) {
+        moving::angle += rotationSpeed;
         glutPostRedisplay();
-        glutTimerFunc(100, animation, 0);
+        glutTimerFunc(1000 / FPS, animation, 0);
     }
     
+}
+void specialFunc(int key, int x, int y) {
+    switch (key) {
+    case GLUT_KEY_LEFT:
+        camDirection += 0.1f;
+        break;
+    case GLUT_KEY_RIGHT:
+        camDirection -= 0.1f;
+        break;
+    case GLUT_KEY_UP:
+        camZ += 0.2f;
+        break;
+    case GLUT_KEY_DOWN:
+        camZ -= 0.2f;
+        break;
+    }
+    if (camZ < 1.f) camZ = 1.f;
 }
 
 int main(int argc, char** argv) {
@@ -2156,28 +1496,26 @@ int main(int argc, char** argv) {
     //Set window position
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);      // window size
     //glutInitWindowPosition(500, 500);  // distance from the top-left screen
-    glutCreateWindow("Hello world");    // message displayed on top bar window
+    glutCreateWindow("NguyenDuyHung - 2013389");    // message displayed on top bar window
 
-    //Tell GLUT whenever main window needs to be repainted that it should call the function display() 
     glutDisplayFunc(displayFunc);
-
     // Maintain viewport
     glutReshapeFunc(reshapeFunc);
-
+    //Recognize arrow
+    glutSpecialFunc(specialFunc);
     //Recognize keyboard
     glutKeyboardFunc(keyboardFunc);
-
     //Set cam direction as mouse clicking position
     glutMotionFunc(motionFunc);
-
     //Set cam distance by mouse scroll
     glutMouseWheelFunc(mousewheelFunc);
 
-    if (animate == true) {
-        animation(1);
-    }
+    initGraphic();
+
+    //animation(0);
     //Tell GLUT to start raeding and processing event. This function never return
     //The program only exit when user close the main window or kill the process
     glutMainLoop();
 
+    
 }

@@ -1494,7 +1494,7 @@ int main(int argc, char** argv) {
     //Set window position
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);      // window size
     //glutInitWindowPosition(500, 500);  // distance from the top-left screen
-    glutCreateWindow("NguyenDuyHung - 2013389");    // message displayed on top bar window
+    glutCreateWindow("Nguyen Duy Hung - 2013389");    // message displayed on top bar window
 
     glutDisplayFunc(displayFunc);
     // Maintain viewport
